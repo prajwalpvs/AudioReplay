@@ -20,15 +20,18 @@
             align-items: center;
             justify-content: center;
             padding: 20px;
+            overflow-y: auto;
         }
 
         .container {
             background: white;
             border-radius: 20px;
             padding: 40px;
-            max-width: 600px;
+            max-width: 800px;
             width: 100%;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            margin-top: 20px;
+            margin-bottom: 20px;
         }
 
         h1 {
@@ -52,11 +55,11 @@
 
         button {
             flex: 1;
-            min-width: 120px;
-            padding: 15px 25px;
+            min-width: 100px;
+            padding: 12px 20px;
             border: none;
             border-radius: 10px;
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
@@ -82,13 +85,13 @@
             background: #e53e3e;
         }
 
-        .download-btn {
+        .download-btn, .playback-btn {
             background: #48bb78;
             color: white;
             display: none;
         }
 
-        .download-btn:hover {
+        .download-btn:hover, .playback-btn:hover {
             background: #38a169;
         }
 
@@ -102,15 +105,123 @@
 
         .status-text {
             color: #4a5568;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 500;
         }
 
         .timer {
-            font-size: 32px;
+            font-size: 28px;
             color: #667eea;
             font-weight: bold;
             margin-top: 10px;
+        }
+
+        .question-box {
+            background: #e6fffa;
+            border-left: 4px solid #38b6a8;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .question-box.active {
+            display: block;
+        }
+
+        .question-label {
+            color: #234e52;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .question-text {
+            color: #0f766e;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .waveform-container {
+            background: #1a202c;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .waveform-container.active {
+            display: block;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100px;
+            display: block;
+            border-radius: 5px;
+        }
+
+        .metrics {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .metrics.active {
+            display: grid;
+        }
+
+        .metric-box {
+            background: #f7fafc;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .metric-label {
+            color: #718096;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .metric-value {
+            color: #2d3748;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .transcript-box {
+            background: #f7fafc;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            display: none;
+            max-height: 150px;
+            overflow-y: auto;
+            border: 2px solid #e2e8f0;
+        }
+
+        .transcript-box.active {
+            display: block;
+        }
+
+        .transcript-label {
+            color: #4a5568;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .transcript-text {
+            color: #2d3748;
+            font-size: 14px;
+            line-height: 1.6;
         }
 
         .settings {
@@ -179,12 +290,90 @@
             0%, 100% { opacity: 1; transform: scale(1); }
             50% { opacity: 0.5; transform: scale(1.1); }
         }
+
+        .recordings-list {
+            background: #f7fafc;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+            display: none;
+        }
+
+        .recordings-list.active {
+            display: block;
+        }
+
+        .recording-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #e2e8f0;
+        }
+
+        .recording-info {
+            flex: 1;
+        }
+
+        .recording-name {
+            color: #2d3748;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .recording-time {
+            color: #718096;
+            font-size: 12px;
+        }
+
+        .recording-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .recording-actions button {
+            min-width: 80px;
+            padding: 8px 12px;
+            font-size: 12px;
+        }
+
+        .secondary-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .secondary-btn:hover {
+            background: #5568d3;
+        }
+
+        .delete-btn {
+            background: #f56565;
+            color: white;
+        }
+
+        .delete-btn:hover {
+            background: #e53e3e;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>🎤 Interview Practice Tool</h1>
         <p class="subtitle">Record yourself and hear how you sound to others</p>
+
+        <div class="question-box" id="questionBox">
+            <div class="question-label">Interview Question</div>
+            <div class="question-text" id="questionText"></div>
+        </div>
 
         <div class="settings">
             <h3>⚙️ Audio Settings</h3>
@@ -202,9 +391,13 @@
                 </label>
                 <input type="range" id="delaySlider" min="1" max="10" value="2" step="1">
                 <div style="margin-top: 8px; font-size: 12px; color: #718096;">
-                    <strong>Tip:</strong> Hear yourself X seconds after speaking - helps identify speech patterns and filler words
+                    <strong>Tip:</strong> Hear yourself X seconds after speaking
                 </div>
             </div>
+        </div>
+
+        <div class="waveform-container" id="waveformContainer">
+            <canvas id="waveform"></canvas>
         </div>
 
         <div class="recording-indicator" id="recordingIndicator">
@@ -217,29 +410,151 @@
             <div class="timer" id="timer">00:00</div>
         </div>
 
+        <div class="metrics" id="metricsContainer">
+            <div class="metric-box">
+                <div class="metric-label">Words Per Minute</div>
+                <div class="metric-value" id="wpmValue">0</div>
+            </div>
+            <div class="metric-box">
+                <div class="metric-label">Filler Words</div>
+                <div class="metric-value" id="fillerCount">0</div>
+            </div>
+            <div class="metric-box">
+                <div class="metric-label">Avg Pause Duration</div>
+                <div class="metric-value" id="pauseValue">0s</div>
+            </div>
+            <div class="metric-box">
+                <div class="metric-label">Total Pauses</div>
+                <div class="metric-value" id="pauseCount">0</div>
+            </div>
+        </div>
+
+        <div class="transcript-box" id="transcriptBox">
+            <div class="transcript-label">Real-Time Transcript</div>
+            <div class="transcript-text" id="transcript"></div>
+        </div>
+
         <div class="controls">
             <button class="start-btn" id="startBtn">Start Practice</button>
             <button class="stop-btn" id="stopBtn">Stop</button>
-            <button class="download-btn" id="downloadBtn">Download Recording</button>
+            <button class="download-btn" id="downloadBtn">Download</button>
+            <button class="playback-btn" id="playbackBtn">Play</button>
         </div>
 
         <div class="tips">
-            <strong>💡 Tips:</strong> Use headphones to avoid feedback. Speak naturally as if in a real interview. Review your recording to improve clarity and pace.
+            <strong>💡 Tips:</strong> Use headphones to avoid feedback. Speak naturally. Review your metrics to improve clarity and pace.
+        </div>
+
+        <div class="recordings-list" id="recordingsList">
+            <h3 style="margin-bottom: 15px; color: #2d3748;">📚 Previous Recordings</h3>
+            <div id="recordingsContainer"></div>
         </div>
     </div>
 
     <script>
+        // Interview Questions Database (extended)
+        const interviewQuestions = [
+            "Why do you want to work for this organization?",
+            "Tell me about a time when public service impacted you. What did it mean to you?",
+            "Talk about a time that your integrity was tested. What was the outcome?",
+            "What's the greatest impact you had on your team.",
+            "Tell me about a time that you were given feedback that was hard to hear.",
+            "Tell me about a time when you met an obstacle and overcame it.",
+            "Provide an example when there was a conflict you had to deal with and how you handled it. In hindsight, how might you have handled it differently?",
+            "Tell me about a time when you recommended or implemented an innovative initiative or process. What did you recommend or implement? What did it improve?",
+            "What do you need from us to help you grow?",
+            "What does diversity and inclusion mean to you and how do you support it?",
+            "What is the best thing you learned from a mistake that you made?",
+            "What would your current supervisor say are your strengths and weaknesses?",
+            "What is something you did in your professional experience that you are most proud of and why?",
+            "What haven’t we asked you that you want us to know?",
+            "What is our mission statement and what does it mean to you?",
+            "What do you think you will enjoy most about this position and what will you least enjoy?",
+            "What are your hobbies?",
+            "What do you feel you can contribute to this organization?",
+            "What interests you in public service?",
+            "What do you like to do for fun?",
+            "What motivates you?",
+            "What’s something not on your resume that you are proud of?",
+            "What makes you the best candidate for this position?",
+            "What’s your greatest professional failure and what did you learn from it?",
+            "What is your greatest accomplishment?",
+            "What is the most difficult decision you have had to make in the last 6 months?",
+            "What is the last book you read?",
+            "What management style do you work best with and why?",
+            "What do you bring to this position that no one else can?",
+            "What would your subordinates or peers say about your work ethic?",
+            "What is your passion and how would you use it in your job?",
+            "What are your top 3 work values and why?",
+            "What are the best opportunities for growth and development?",
+            "What strengths would you bring to this position, if you were hired?",
+            "What makes you the best candidate for this job?",
+            "Tell me three things you’d want to do/have in your ideal job and why?",
+            "Tell me a little bit about yourself from the perspective of your last boss.",
+            "Tell me about a time when you faced a challenging situation and worked as a team to solve it.",
+            "Tell me about the work project you are most proud of and why.",
+            "Tell me about a time when you had to deal with an irate citizen. How did you deal with the situation?",
+            "Tell me about a time you disagreed with your boss. How did you handle it?",
+            "Tell me about a situation that went from negative to positive and describe the skills and leadership qualities you used.",
+            "Tell me about specific actions you have taken to promote and maintain effective work relationships with your team members.",
+            "How do you deal with difficult people?",
+            "How many years do you believe will be necessary to accomplish your career goals?",
+            "How would you incorporate equity and social justice into your role?",
+            "How does this position align with your long term goals?",
+            "How have you positively influenced a coworker?",
+            "How do you approach a tough situation?",
+            "How would you deal with a coworker who was difficult to work with?",
+            "How would your co-workers describe you? How about your friends?",
+            "How do you handle stress? What does stressed out look like on you?",
+            "How do you attract top talent and keep them in your organization?",
+            "How do you like to be managed?",
+            "How do you stay on track with continually changing priorities?",
+            "How long does it take you to reach out for help when you don’t know the answer?",
+            "How would your children, siblings, or parents describe you?",
+            "How do you prioritize your time in order to meet deadlines?",
+            "How has your education and experience prepared you for this role?",
+            "How would you describe yourself in one word",
+            "Tell me about yourself and your background.",
+            "What are your greatest strengths?",
+            "What is your biggest weakness and how are you working on it?",
+            "Where do you see yourself in 5 years?",
+            "What motivates you in your work?",
+            "How do you handle stress and pressure?",
+            "Tell me about a time you failed and what you learned from it.",
+            "What are your salary expectations?",
+            "How do you stay updated with industry trends?",
+            "Describe your leadership style.",
+            "How do you handle working with difficult team members?",
+            "What is your approach to problem-solving?",
+            "Tell me about your proudest achievement."
+        ];
+
+        const fillerWords = ['um', 'uh', 'like', 'you know', 'basically', 'literally', 'actually', 'i mean', 'right'];
+
         let audioContext;
         let mediaStream;
         let mediaRecorder;
         let recordedChunks = [];
         let startTime;
         let timerInterval;
+        let metricsInterval;
         let source, gainNode, delayNode;
+        let analyser;
+        let dataArray;
+        let animationId;
+        let recognition;
+        let globalTranscript = '';
+        let currentRecordingId;
+        let pauseStartTime = 0;
+        let totalPauseTime = 0;
+        let pauseCount = 0;
+        let isSilent = false;
+        let totalWords = 0;
 
         const startBtn = document.getElementById('startBtn');
         const stopBtn = document.getElementById('stopBtn');
         const downloadBtn = document.getElementById('downloadBtn');
+        const playbackBtn = document.getElementById('playbackBtn');
         const statusText = document.getElementById('statusText');
         const timer = document.getElementById('timer');
         const volumeSlider = document.getElementById('volumeSlider');
@@ -247,6 +562,115 @@
         const volumeDisplay = document.getElementById('volumeDisplay');
         const delayDisplay = document.getElementById('delayDisplay');
         const recordingIndicator = document.getElementById('recordingIndicator');
+        const questionBox = document.getElementById('questionBox');
+        const questionText = document.getElementById('questionText');
+        const waveformContainer = document.getElementById('waveformContainer');
+        const waveformCanvas = document.getElementById('waveform');
+        const transcriptBox = document.getElementById('transcriptBox');
+        const transcriptElement = document.getElementById('transcript');
+        const metricsContainer = document.getElementById('metricsContainer');
+        const recordingsList = document.getElementById('recordingsList');
+        const recordingsContainer = document.getElementById('recordingsContainer');
+
+        // IndexedDB
+        let db;
+        const initDB = () => {
+            return new Promise((resolve, reject) => {
+                const request = indexedDB.open('InterviewPracticeDB', 1);
+
+                request.onerror = () => reject(request.error);
+                request.onsuccess = () => {
+                    db = request.result;
+                    resolve();
+                };
+
+                request.onupgradeneeded = (event) => {
+                    const newDb = event.target.result;
+                    if (!newDb.objectStoreNames.contains('recordings')) {
+                        newDb.createObjectStore('recordings', { keyPath: 'id' });
+                    }
+                };
+            });
+        };
+
+        initDB().then(() => loadRecordings());
+
+        // Web Speech API
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (SpeechRecognition) {
+            recognition = new SpeechRecognition();
+            recognition.continuous = true;
+            recognition.interimResults = true;
+            recognition.lang = 'en-US';
+
+            recognition.onresult = (event) => {
+                let interimTranscript = '';
+                for (let i = event.resultIndex; i < event.results.length; i++) {
+                    const segment = event.results[i][0].transcript;
+                    if (event.results[i].isFinal) {
+                        const finalized = segment + ' ';
+                        globalTranscript += finalized;
+                        transcriptElement.textContent = globalTranscript;
+                        totalWords += finalized.trim().split(/\s+/).length;
+                        countFillerWords(finalized);
+                    } else {
+                        interimTranscript += segment;
+                    }
+                }
+            };
+
+            recognition.onerror = (event) => {
+                console.log('Speech recognition error:', event.error);
+            };
+        }
+
+        function countFillerWords(text) {
+            const lowerText = text.toLowerCase();
+            fillerWords.forEach(word => {
+                const regex = new RegExp(`\\b${word}\\b`, 'g');
+                const matches = lowerText.match(regex);
+                if (matches) {
+                    const currentCount = parseInt(document.getElementById('fillerCount').textContent, 10);
+                    document.getElementById('fillerCount').textContent = currentCount + matches.length;
+                }
+            });
+        }
+
+        function drawWaveform() {
+            const canvasContext = waveformCanvas.getContext('2d');
+            canvasContext.clearRect(0, 0, waveformCanvas.width, waveformCanvas.height);
+            canvasContext.fillStyle = '#667eea';
+
+            analyser.getByteTimeDomainData(dataArray);
+            const barWidth = waveformCanvas.width / dataArray.length;
+            const barHeight = waveformCanvas.height;
+
+            for (let i = 0; i < dataArray.length; i++) {
+                const value = dataArray[i];
+                const normalized = value / 255;
+                const barHeightValue = normalized * barHeight;
+                canvasContext.fillRect(i * barWidth, barHeight - barHeightValue, barWidth - 1, barHeightValue);
+            }
+
+            animationId = requestAnimationFrame(drawWaveform);
+        }
+
+        function displayRandomQuestion() {
+            const randomIndex = Math.floor(Math.random() * interviewQuestions.length);
+            questionText.textContent = interviewQuestions[randomIndex];
+            questionBox.classList.add('active');
+        }
+
+        function updateMetrics() {
+            if (!startTime) return;
+            const elapsed = Math.floor((Date.now() - startTime) / 1000);
+            const minutes = elapsed / 60;
+            const wpm = minutes > 0 ? Math.round(totalWords / minutes) : 0;
+            document.getElementById('wpmValue').textContent = wpm;
+            document.getElementById('pauseCount').textContent = pauseCount;
+            const avgPause = pauseCount > 0 ? (totalPauseTime / pauseCount).toFixed(1) : 0;
+            document.getElementById('pauseValue').textContent = avgPause + 's';
+        }
 
         volumeSlider.addEventListener('input', (e) => {
             const value = e.target.value;
@@ -267,24 +691,42 @@
 
         startBtn.addEventListener('click', async () => {
             try {
+                globalTranscript = '';
+                transcriptElement.textContent = '';
+                totalWords = 0;
+                pauseCount = 0;
+                totalPauseTime = 0;
+                document.getElementById('fillerCount').textContent = '0';
+                document.getElementById('wpmValue').textContent = '0';
+                document.getElementById('pauseCount').textContent = '0';
+                document.getElementById('pauseValue').textContent = '0s';
+
                 audioContext = new AudioContext();
-                mediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                
-                // Setup audio monitoring
+                mediaStream = await navigator.mediaDevices.getUserMedia({
+                    audio: {
+                        echoCancellation: true,
+                        noiseSuppression: true
+                    }
+                });
+
                 source = audioContext.createMediaStreamSource(mediaStream);
-                delayNode = audioContext.createDelay(10); // Max 10 seconds delay
+                analyser = audioContext.createAnalyser();
+                analyser.fftSize = 256;
+                dataArray = new Uint8Array(analyser.frequencyBinCount);
+                delayNode = audioContext.createDelay(10);
                 gainNode = audioContext.createGain();
-                
+
                 delayNode.delayTime.value = parseFloat(delaySlider.value);
                 gainNode.gain.value = volumeSlider.value / 100;
-                
+
+                source.connect(analyser);
                 source.connect(delayNode);
                 delayNode.connect(gainNode);
                 gainNode.connect(audioContext.destination);
 
-                // Setup recording
                 mediaRecorder = new MediaRecorder(mediaStream);
                 recordedChunks = [];
+                currentRecordingId = Date.now();
 
                 mediaRecorder.ondataavailable = (e) => {
                     if (e.data.size > 0) {
@@ -294,24 +736,43 @@
 
                 mediaRecorder.onstop = () => {
                     const blob = new Blob(recordedChunks, { type: 'audio/webm' });
-                    const url = URL.createObjectURL(blob);
-                    downloadBtn.onclick = () => {
-                        const a = document.createElement('a');
-                        a.href = url;
-                        a.download = `interview-practice-${Date.now()}.webm`;
-                        a.click();
+                    const timestamp = new Date().toLocaleString();
+
+                    const tx = db.transaction('recordings', 'readwrite');
+                    const store = tx.objectStore('recordings');
+                    store.add({
+                        id: currentRecordingId,
+                        blob: blob,
+                        timestamp: timestamp,
+                        duration: Math.floor((Date.now() - startTime) / 1000)
+                    });
+
+                    tx.oncomplete = () => {
+                        loadRecordings();
                     };
-                    downloadBtn.style.display = 'block';
                 };
 
                 mediaRecorder.start();
                 startTime = Date.now();
-                timerInterval = setInterval(updateTimer, 1000);
+                timerInterval = setInterval(updateTimer, 100);
+                metricsInterval = setInterval(updateMetrics, 1000);
 
                 startBtn.style.display = 'none';
                 stopBtn.style.display = 'block';
+                downloadBtn.style.display = 'none';
+                playbackBtn.style.display = 'none';
                 statusText.textContent = '🎙️ Recording... Speak naturally!';
                 recordingIndicator.style.display = 'flex';
+                waveformContainer.classList.add('active');
+                metricsContainer.classList.add('active');
+                transcriptBox.classList.add('active');
+
+                displayRandomQuestion();
+                drawWaveform();
+
+                if (recognition) {
+                    recognition.start();
+                }
 
             } catch (error) {
                 alert('Error accessing microphone: ' + error.message);
@@ -328,20 +789,131 @@
             if (audioContext) {
                 audioContext.close();
             }
+            if (recognition) {
+                recognition.stop();
+            }
             clearInterval(timerInterval);
+            clearInterval(metricsInterval);
+            cancelAnimationFrame(animationId);
 
             startBtn.style.display = 'block';
             stopBtn.style.display = 'none';
-            statusText.textContent = '✅ Recording saved! Download to review';
+            downloadBtn.style.display = 'block';
+            playbackBtn.style.display = 'block';
+            statusText.textContent = '✅ Recording saved!';
             recordingIndicator.style.display = 'none';
         });
 
+        downloadBtn.addEventListener('click', () => {
+            const tx = db.transaction('recordings', 'readonly');
+            const store = tx.objectStore('recordings');
+            const request = store.get(currentRecordingId);
+
+            request.onsuccess = () => {
+                const recording = request.result;
+                const url = URL.createObjectURL(recording.blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `interview-practice-${currentRecordingId}.webm`;
+                a.click();
+            };
+        });
+
+        playbackBtn.addEventListener('click', () => {
+            const tx = db.transaction('recordings', 'readonly');
+            const store = tx.objectStore('recordings');
+            const request = store.get(currentRecordingId);
+
+            request.onsuccess = () => {
+                const recording = request.result;
+                const url = URL.createObjectURL(recording.blob);
+                const audio = new Audio();
+                audio.src = url;
+                audio.play();
+            };
+        });
+
         function updateTimer() {
+            if (!startTime) return;
             const elapsed = Math.floor((Date.now() - startTime) / 1000);
             const minutes = Math.floor(elapsed / 60);
             const seconds = elapsed % 60;
             timer.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
         }
+
+        function loadRecordings() {
+            const tx = db.transaction('recordings', 'readonly');
+            const store = tx.objectStore('recordings');
+            const request = store.getAll();
+
+            request.onsuccess = () => {
+                const recordings = request.result.sort((a, b) => b.id - a.id);
+                recordingsContainer.innerHTML = '';
+
+                if (recordings.length > 0) {
+                    recordingsList.classList.add('active');
+                    recordings.forEach((recording, index) => {
+                        const item = document.createElement('div');
+                        item.className = 'recording-item';
+                        item.innerHTML = `
+                            <div class="recording-info">
+                                <div class="recording-name">Recording #${index + 1}</div>
+                                <div class="recording-time">${recording.timestamp} - ${recording.duration}s</div>
+                            </div>
+                            <div class="recording-actions">
+                                <button class="secondary-btn" onclick="playRecording(${recording.id})">Play</button>
+                                <button class="secondary-btn" onclick="downloadRecording(${recording.id})">Download</button>
+                                <button class="secondary-btn delete-btn" onclick="deleteRecording(${recording.id})">Delete</button>
+                            </div>
+                        `;
+                        recordingsContainer.appendChild(item);
+                    });
+                } else {
+                    recordingsList.classList.remove('active');
+                }
+            };
+        }
+
+        window.playRecording = function(recordingId) {
+            const tx = db.transaction('recordings', 'readonly');
+            const store = tx.objectStore('recordings');
+            const request = store.get(recordingId);
+
+            request.onsuccess = () => {
+                const recording = request.result;
+                const url = URL.createObjectURL(recording.blob);
+                const audio = new Audio();
+                audio.src = url;
+                audio.play();
+            };
+        };
+
+        window.downloadRecording = function(recordingId) {
+            const tx = db.transaction('recordings', 'readonly');
+            const store = tx.objectStore('recordings');
+            const request = store.get(recordingId);
+
+            request.onsuccess = () => {
+                const recording = request.result;
+                const url = URL.createObjectURL(recording.blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `interview-practice-${recordingId}.webm`;
+                a.click();
+            };
+        };
+
+        window.deleteRecording = function(recordingId) {
+            if (confirm('Are you sure you want to delete this recording?')) {
+                const tx = db.transaction('recordings', 'readwrite');
+                const store = tx.objectStore('recordings');
+                store.delete(recordingId);
+
+                tx.oncomplete = () => {
+                    loadRecordings();
+                };
+            }
+        };
     </script>
 </body>
 </html>
